@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import Logo from "../assets/logo.png";
+import Logo from "../assets/blackfriday.jpg";
 import "./Header.css";
 export const Header = () => {
   return (
@@ -9,7 +9,8 @@ export const Header = () => {
         <span>Shopping Cart</span>
       </Link>
       <nav className="navigation">
-      <NavLink to="/" className="link">Home</NavLink>
+      <NavLink to="/" className="link" end>Home</NavLink>
+      <br />
       <NavLink to="/" className="link">Cart</NavLink>
       </nav>
       <Link to="/cart" className="items">

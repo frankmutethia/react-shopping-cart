@@ -1,5 +1,6 @@
-import {createContext} from "react";
-import { useContext } from "react";
+import {createContext, useReducer} from "react";
+import { useContext} from "react";
+import { cartReducer } from "../reducer/cartReducer";
 
 const initialState = {
     cartList:[],
@@ -11,9 +12,45 @@ export const CartContext = createContext(initialState);
 
 
  export const CartProvider = ({children}) => {
+    //dispatch has the power to call the cartReducer cases
+    //dispatch is the more powerful version of set state and set counter
+    // eslint-disable-next-line no-unused-vars
+    const [state, dispatch] = useReducer(cartReducer, initialState);
+    
+    // eslint-disable-next-line no-unused-vars
+    const addToCart = (product)=> {
+    // eslint-disable-next-line no-unused-vars
+    const updateCartList = state.cartList.concat(product);
+    dispatch({
+        //type is basically what we have to perform
+        type: "ADD_TO_CART",
+        payload:{
+            // eslint-disable-next-line no-undef
+            products: updatedCart
+        }
+
+    })
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const removeFromCart = (product) => {
+        // eslint-disable-next-line no-unused-vars
+        const updateCartList = state.cartList.filter(current => current.id !== product.id);
+
+        dispatch({
+            type: "REMOVE_FROM_CART",
+            payload:{
+                // eslint-disable-next-line no-undef
+                products: updatedCartList
+            }
+        })
+    }
 
     const value = {
-        total: 50,
+        total: state.total,
+        cartList: state.cartList,
+        addToCart,
+        removeFromCart
     };
 
     return (

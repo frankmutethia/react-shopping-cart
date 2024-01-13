@@ -15,3 +15,5 @@ export const CartCard = ({product}) => {
       </div>
   )
 }
+
+//we can create a method to update our cart everytime a change is made

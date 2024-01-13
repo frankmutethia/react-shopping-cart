@@ -1,6 +1,6 @@
-import {createContext, useReducer} from "react";
-import { useContext} from "react";
-import { cartReducer } from "../reducer/cartReducer";
+import { useContext, useReducer} from "react";
+import { createContext } from "react";
+import {cartReducer} from "../reducer/cartReducer";
 
 const initialState = {
     cartList:[],
@@ -8,43 +8,53 @@ const initialState = {
 }
 
 
-export const CartContext = createContext(initialState);
+const CartContext = createContext(initialState);
 
 
  export const CartProvider = ({children}) => {
-    //dispatch has the power to call the cartReducer cases
-    //dispatch is the more powerful version of set state and set counter
-    // eslint-disable-next-line no-unused-vars
     const [state, dispatch] = useReducer(cartReducer, initialState);
     
-    // eslint-disable-next-line no-unused-vars
     const addToCart = (product)=> {
-    // eslint-disable-next-line no-unused-vars
-    const updateCartList = state.cartList.concat(product);
+    const updatedCartList = state.cartList.concat(product);
+    updateTotal(updatedCartList);
     dispatch({
-        //type is basically what we have to perform
         type: "ADD_TO_CART",
         payload:{
-            // eslint-disable-next-line no-undef
-            products: updatedCart
+            products: updatedCartList
         }
 
     })
     }
 
-    // eslint-disable-next-line no-unused-vars
     const removeFromCart = (product) => {
-        // eslint-disable-next-line no-unused-vars
-        const updateCartList = state.cartList.filter(current => current.id !== product.id);
+         const updatedCartList = state.cartList.filter(current => current.id !== product.id);
+        updateTotal(updatedCartList);
 
-        dispatch({
-            type: "REMOVE_FROM_CART",
-            payload:{
-                // eslint-disable-next-line no-undef
-                products: updatedCartList
-            }
-        })
+    dispatch({
+        type: "REMOVE_FROM_CART",
+        payload: {
+            products: updatedCartList
+        }
+    })
+}
+
+
+//product update
+    
+    const updateTotal = (products) =>{
+      let total = 0;
+      products.forEach(product => total = total + product.price);
+
+      dispatch({
+        type: "UPDATE_TOTAL",
+        payload:{
+        total
+        }
+    })
+    
     }
+
+
 
     const value = {
         total: state.total,

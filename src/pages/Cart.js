@@ -4,10 +4,12 @@ import { CartCard } from "../components";
 
 
 export const Cart = () => {
-  //destructure it
-  const{ total } = useCart();
-
+  
+  const{ total, cartList } = useCart();
   useTitle("Cart");
+  console.log(cartList);
+
+ 
   
   const products = [
     {id: 1, "name": "KFC Spicy Chicken", "price": 350, "image": "/images/blackfriday.jpg",}, 
